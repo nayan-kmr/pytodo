@@ -1,5 +1,23 @@
-<h1>PyTodo</h1>
-<a href="#">Login</a>&nbsp;&nbsp;<a href="#">Signup</a>
-<hr><br>
-{% block content %}
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>PyTodo</title>
+  </head>
+  <body>
+    <a href="/"><h1>PyTodo</h1></a>
+    {% if user.is_authenticated %}
+    <span>Welcome, {{ user.first_name }}.</span>&nbsp;&nbsp;<a href="{% url 'tasks' %}">Tasks</a>
+    <a href="javascript:{document.getElementById('logout').submit()}" style="float:right;margin-right:20px;">Logout</a>
+    <form id="logout" action="{% url 'logout' %}" method="POST">
+      {% csrf_token %}
+      <input type="hidden" />
+    </form>
+    {% else %}
+    <a href="{% url 'login' %}">Login</a>&nbsp;&nbsp;<a href="{% url 'signup' %}">Signup</a>
+    {% endif %}
+    <hr><br>
+    {% block content %}
+    {% endblock %}
+  </body>
+</html>
